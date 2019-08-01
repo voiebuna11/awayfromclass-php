@@ -6,7 +6,7 @@ if(isset($_POST['from_id']) && isset($_POST['to_id']) && isset($_POST['text']) &
 	$to_id = $_POST['to_id'];
 	$text = $_POST['text'];
 	$date = $_POST['date'];
-	$post_data = [];
+	$post_data = array();
 
 	$stmtid=$db->prepare("SELECT mess_id FROM chat_messages 
 							  WHERE ((mess_to_id=? AND mess_from_id=?) OR (mess_to_id=? AND mess_from_id=?)) AND mess_text=? AND mess_date=?");
@@ -21,13 +21,13 @@ if(isset($_POST['from_id']) && isset($_POST['to_id']) && isset($_POST['text']) &
 							  ORDER BY mess_id ASC");
 	$stmtlm->execute(array($to_id, $from_id, $from_id, $to_id, $last_id));
 	while($message=$stmtlm->fetch()){
-		$row =	[
+		$row =	array(
 				"id" => $message['mess_id'],
 		 		"to" => $message['mess_to_id'],
 		 		"from" => $message['mess_from_id'],
 		 		"date" => $message['mess_date'],
 		 		"text" => $message['mess_text']
-			];
+			);
 		array_push($post_data, $row);
 	}
 	$json = json_encode(array('message_list' => $post_data));

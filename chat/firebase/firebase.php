@@ -10,12 +10,12 @@ class Firebase {
     public function send($to, $message) {
     	//echo json_encode($message);
     	//get info with from $message
-    	$notification = [
+    	$notification = array(
 	        'title' =>$message['data']['title'],
 	        'body' => $message['data']['message'],
 	        'icon' =>'afc_border', 
 	        'sound' => 'notification'
-	    ];
+	    );
         $fields = array(
             'to' => $to,
             'notification' => $notification,

@@ -3,7 +3,7 @@ require_once("../dbconn.php");
 
 if(isset($_POST['user_id'])){
 	$id = $_POST['user_id'];
-	$post_data = [];
+	$post_data = array();
 
 	
 	$stmtul=$db->prepare("SELECT us_users.*, chat_messages.mess_text, MAX(chat_messages.mess_date), chat_messages.mess_to_id, 
@@ -22,7 +22,7 @@ if(isset($_POST['user_id'])){
 		$stmtlm->execute(array($id, $p['user_id'], $p['user_id'], $id));
 		$message = $stmtlm->fetch();
 		
-		$row =	[
+		$row =	array(
 	    	"id" => $p['user_id'],
 	 		"type" => $p['user_type'],
 	 		"user" => $p['user_name'],
@@ -42,7 +42,7 @@ if(isset($_POST['user_id'])){
 	 		"from" => $message['mess_from_id'],
 	 		"date" => $message['mess_date'],
 	 		"text" => $message['mess_text']
-			];
+			);
 		array_push($post_data, $row);
 	}
 	$json = json_encode(array('user_list' => $post_data));
