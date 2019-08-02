@@ -22,7 +22,7 @@ if(isset($_POST['user_name']) && isset($_POST['user_password']) && isset($_POST[
 		if($type == "prof" || $type == "std"){
 			$sqlru=$db->prepare("INSERT INTO `us_users` (`user_id`, `user_name`, `user_email`, `user_password`, `user_first_name`, 
 								`user_last_name`, `user_phone_number`, `user_city`, `user_profile_pic`, `user_type`, `user_year`, `user_specialization`)
-								VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+								VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     		$sqlru->execute(array($username, $email, $password, $first_name, $last_name, $phone, $city, $pic, $type, $year, $spec));
 			
 			die("success: data_registered");
