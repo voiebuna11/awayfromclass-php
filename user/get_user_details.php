@@ -8,8 +8,8 @@ if(isset($_POST['user_name'])){
 	$stmtus->execute(array($username));
 	
 	while($p=$stmtus->fetch()){
-			$post_data = [
-				[
+			$post_data = array(
+				array(
 		    	"id" => $p['user_id'],
 		 		"type" => $p['user_type'],
 		 		"user" => $p['user_name'],
@@ -22,8 +22,8 @@ if(isset($_POST['user_name'])){
 		 		"spec" => $p['user_specialization'],
 		 		"pic" => $p['user_profile_pic'],
 		 		"chat_id" => $p['user_chat_id']
-				]
-			];
+				)
+			);
 	}
 	$json = json_encode(array('user_data' => $post_data));
 	die($json);
