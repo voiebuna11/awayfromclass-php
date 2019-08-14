@@ -2,7 +2,7 @@
 require_once("../dbconn.php");
 
 if(isset($_POST['request'])){
-	$rowost_data = array();
+	$post_data = array();
 	$stmtls=$db->prepare("SELECT * FROM us_users ORDER BY user_id DESC LIMIT 8");
 	$stmtls->execute();
 	
@@ -21,9 +21,9 @@ if(isset($_POST['request'])){
 		 		"pic" => $row['user_profile_pic'],
 		 		"chat_id" => $row['user_chat_id']
 			);
-			array_push($rowost_data, $row);
+			array_push($post_data, $row);
 	}
-	$json = json_encode(array('user_list' => $rowost_data));
+	$json = json_encode(array('user_list' => $post_data));
 	die($json);
 }
 ?>
