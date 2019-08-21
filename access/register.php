@@ -24,6 +24,7 @@ if(isset($_POST['user_name']) && isset($_POST['user_password']) && isset($_POST[
 								`user_last_name`, `user_phone_number`, `user_city`, `user_profile_pic`, `user_type`, `user_year`, `user_specialization`)
 								VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     		$sqlru->execute(array($username, $email, $password, $first_name, $last_name, $phone, $city, $pic, $type, $year, $spec));
+			mkdir("../users/".$username);
 			
 			die("success: data_registered");
 		}  else {
