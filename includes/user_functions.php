@@ -1,9 +1,15 @@
 <?php
 function getUserId($db, $user_name){
-	$sqlcp=$db->prepare("SELECT user_id FROM us_users WHERE user_name=?");
-    $sqlcp->execute(array($user_name));
-	$row = $sqlcp->fetch(PDO::FETCH_ASSOC);
+	$sqlui=$db->prepare("SELECT user_id FROM us_users WHERE user_name=?");
+    $sqlui->execute(array($user_name));
+	$row = $sqlui->fetch(PDO::FETCH_ASSOC);
     return $row['user_id'];
+}
+function getUserName($db, $user_id){
+	$sqlun=$db->prepare("SELECT user_name FROM us_users WHERE user_id=?");
+    $sqlun->execute(array($user_id));
+	$row = $sqlun->fetch(PDO::FETCH_ASSOC);
+    return $row['user_name'];
 }
 function checkUserDisp($db, $user_name, $email){
 	$c=0;

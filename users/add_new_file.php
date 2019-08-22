@@ -17,6 +17,7 @@ require_once("../includes/user_functions.php");
 		//files with same name gets counter (1), (2), etc..
 		$file_count = checkFileDisp($db, $user_name, $file_name);
 		if($file_count > 0){
+			$ext = strtolower($ext);
 			$file_name =  str_replace('.'.$ext,' ('.$file_count.').'.$ext,$file_name);
 		}
 		
