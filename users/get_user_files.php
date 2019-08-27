@@ -5,7 +5,7 @@ if(isset($_POST['user_id'])){
 	$user_id = $_POST['user_id'];
 	$post_data = array();
 	
-	$stmtfl=$db->prepare("SELECT * FROM us_files WHERE us_author_id=?");
+	$stmtfl=$db->prepare("SELECT * FROM us_files WHERE us_author_id=? ORDER BY us_file_id DESC");
 	$stmtfl->execute(array($user_id));
 	
 	while($f=$stmtfl->fetch()){
