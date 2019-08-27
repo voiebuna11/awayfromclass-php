@@ -19,7 +19,7 @@ if(isset($_POST['search']) && $_POST['search'] != ''){
 		$condition.=" OR INSTR(user_last_name, '{$src}') > 0";
 		
 		//matrix search
-		$sqlsid=$db->prepare("SELECT * FROM us_users WHERE user_email LIKE '%?%' OR user_name LIKE '%?%' OR user_first_name LIKE '%?%' OR user_last_name LIKE '%?%'".$condition);
+		$sqlsid=$db->prepare("SELECT * FROM crs_courses WHERE course_name LIKE '%?%' OR course_description LIKE '%?%' ".$condition);
 		$sqlsid->execute(array($src, $src, $src, $src));
 		
 		while($r=$sqlsid->fetch()){
