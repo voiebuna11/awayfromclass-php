@@ -10,7 +10,9 @@ if(isset($_POST['user_id'])){
 	while($row=$stmtcl->fetch()){
 			$row = array(
 		    	"id" => $row['course_id'],
-		 		"name" => $row['course_name']
+		 		"name" => $row['course_name'],
+		 		"enrollment" => NULL,
+		 		"author_id" => $user_id
 			);
 			array_push($post_data, $row);
 	}

@@ -21,6 +21,16 @@ function checkUserDisp($db, $user_name, $email){
 
 	return $c;
 }
+function checkUserEnroll($db, $course_id, $user_id){
+	$c=0;
+	
+	$sqlue=$db->prepare("SELECT COUNT(enroll_id) FROM crs_enrollments WHERE enroll_course_id=? AND enroll_user_id=?");
+    $sqlue->execute(array($course_id, $user_id));
+	$row = $sqlue->fetch(PDO::FETCH_ASSOC);
+    if($row['COUNT(enroll_id)']>0) $c++;
+
+	return $c;
+}
 function checkFileDisp($db, $user_name, $file_name){
 	$c=0;	$user_id = getUserId($db, $user_name);
 	

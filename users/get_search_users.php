@@ -30,11 +30,15 @@ if(isset($_POST['search']) && $_POST['search'] != ''){
 	$ids_from_search = array_unique($ids_from_search);
 	
 	//get ids ready
-	$ids = '';
-	foreach ($ids_from_search as $id) {
-		$ids .= ' user_id='.$id.' OR ';
-	} 
-	$ids = substr($ids, 0, -3);
+	if(sizeof($ids_from_search) == 0){
+		$ids = "user_id='0'";
+	} else {
+		$ids = '';
+		foreach ($ids_from_search as $id) {
+			$ids .= ' user_id='.$id.' OR ';
+		} 
+		$ids = substr($ids, 0, -3);
+	}
 	
 	//get details
 	$sqlsu=$db->prepare("SELECT * FROM us_users WHERE ".$ids." ORDER BY user_last_name ASC");
