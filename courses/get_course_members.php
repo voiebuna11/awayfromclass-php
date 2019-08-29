@@ -5,7 +5,7 @@ if(isset($_POST['course_id'])){
 	$course_id = $_POST['course_id'];
 	$post_data = array();
 	
-	//get enrolled list
+	//get author
 	$stmtcm=$db->prepare("SELECT * FROM us_users 
 						  INNER JOIN crs_courses ON us_users.user_id=crs_courses.author_id
 						  WHERE crs_courses.course_id=?");
@@ -29,7 +29,7 @@ if(isset($_POST['course_id'])){
 			array_push($post_data, $row);
 	}
 	
-	//get enrolled list
+	//get accepeted enrollments 
 	$stmtcm=$db->prepare("SELECT us_users.user_id, us_users.user_type, us_users.user_name, us_users.user_email, 
 						  us_users.user_last_name, us_users.user_first_name,  us_users.user_phone_number,
 						  us_users.user_city, us_users.user_year, us_users.user_specialization, us_users.user_profile_pic,

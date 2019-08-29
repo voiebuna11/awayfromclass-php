@@ -1,7 +1,7 @@
 <?php
 require_once("../dbconn.php");
 require_once("../includes/user_functions.php");
-
+require_once("../includes/notification_functions.php");
 
  if (isset($_POST['user_id']) && isset($_POST['file_name'])) {
  	$user_id = $_POST['user_id'];
@@ -15,6 +15,9 @@ require_once("../includes/user_functions.php");
 			//remove record from db
 			$sqldd=$db->prepare("DELETE FROM us_files WHERE us_file_name=?");
 			$sqldd->execute(array($file_name));
+			
+			//save event
+			createEvent($db, $user_id, $file_name, 'file', 'user_file', 'removed');
 			die("success: file_removed");
 		}
 	} else {

@@ -3,8 +3,8 @@
 error_reporting(-1);
 ini_set('display_errors', 'On');
 
-require_once __DIR__ . '/firebase/firebase.php';
-require_once __DIR__ . '/firebase/push.php';
+require_once '../firebase/firebase.php';
+require_once '../firebase/push.php';
 
 if(isset($_POST['mess_fcm_id']) && isset($_POST['mess_to_id']) && isset($_POST['mess_from_id']) && isset($_POST['mess_from_name']) && isset($_POST['mess_text'])){
 	$firebase = new Firebase();
@@ -24,7 +24,6 @@ if(isset($_POST['mess_fcm_id']) && isset($_POST['mess_to_id']) && isset($_POST['
 	// timestamp of message
 	$timestamp = $_POST['mess_date'];
 	
-	
 	$push_type = 'individual'; // push type - single user / topic
 	$include_image = TRUE;	
 	$json = '';
@@ -32,8 +31,7 @@ if(isset($_POST['mess_fcm_id']) && isset($_POST['mess_to_id']) && isset($_POST['
 	
 	// optional extra data
 	$extra = array();
-	$extra['team'] = 'India';
-	$extra['score'] = '5.6';
+	$extra['type'] = 'chat_message';
 	
 	$push->setTitle($title);
 	$push->setMessage($message);
@@ -41,15 +39,11 @@ if(isset($_POST['mess_fcm_id']) && isset($_POST['mess_to_id']) && isset($_POST['
 	$push->setExtra($extra);
 	$push->setFrom($fromId);
 	$push->setDate($timestamp);
+	$push->setImage('');
+	//$push->setImage('http://api.androidhive.info/images/minion.jpg');
 	
-	if ($include_image) {
-	    $push->setImage('http://api.androidhive.info/images/minion.jpg');
-	} else {
-	    $push->setImage('');
-	}
-
 	$json = $push->getPush();
-	$response = $firebase->send($regId, $json);
+	$response = $firebase->sendMessage($regId, $json);
 	
 	//data sent -> echo json_encode($json);
 	//data received -> echo json_encode($response);

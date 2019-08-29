@@ -11,6 +11,12 @@ function getUserName($db, $user_id){
 	$row = $sqlun->fetch(PDO::FETCH_ASSOC);
     return $row['user_name'];
 }
+function getUserFullName($db, $user_id){
+	$sqlun=$db->prepare("SELECT user_first_name, user_last_name FROM us_users WHERE user_id=?");
+    $sqlun->execute(array($user_id));
+	$row = $sqlun->fetch(PDO::FETCH_ASSOC);
+    return $row['user_last_name'].' '.$row['user_first_name'];
+}
 function checkUserDisp($db, $user_name, $email){
 	$c=0;
 	
@@ -41,8 +47,7 @@ function checkFileDisp($db, $user_name, $file_name){
 
 	return $c;
 }
-function addUserFile($db, $user_name, $file_name, $file_type){
-    $user_id = getUserId($db, $user_name);
+function addUserFile($db, $user_id, $file_name, $file_type){
 	$sqlraf=$db->prepare("INSERT INTO `us_files` (`us_file_id`, `us_author_id`, `us_file_name`, `us_file_type`, `us_file_date`)
 						VALUES (NULL, ?, ?, ?, ?)");
 	$sqlraf->execute(array($user_id, $file_name, $file_type, time()));

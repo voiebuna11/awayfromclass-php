@@ -1,14 +1,13 @@
 <?php
 require_once("../dbconn.php");
 require_once("../includes/course_functions.php");
+require_once("../includes/notification_functions.php");
 
 if(isset($_POST['course_name']) &&  isset($_POST['course_description']) && isset($_POST['user_id'])){
 	$course_name = $_POST['course_name'];
 	$course_description = $_POST['course_description'];
 	$user_id = $_POST['user_id'];
 	$folder_name = '';
-	
-	
 	
 	if(checkCourseDisp($db, $user_id, $course_name)>0){
 		die("error: course_already");
@@ -33,6 +32,13 @@ if(isset($_POST['course_name']) &&  isset($_POST['course_description']) && isset
 							`course_folder`)
 							VALUES (NULL, ?, ?, ?, ?)");
 		$sqlnc->execute(array($user_id, $course_name, $course_description, $folder_name));
+		
+		//get id of created course
+		$course_id = $db->lastInsertId();
+		
+		//save event
+		createEvent($db, $user_id, $course_id, 'course', 'course_managing', 'created');
+		
 		die("success: data_registered");
 	}
 } else {

@@ -6,8 +6,7 @@
  */
 class Firebase {
 
-    // sending push message to single user by firebase reg id
-    public function send($to, $message) {
+    public function sendMessage($to, $message) {
     	//echo json_encode($message);
     	//get info with from $message
     	$notification = array(
@@ -18,10 +17,24 @@ class Firebase {
 	    );
         $fields = array(
             'to' => $to,
-            'notification' => $notification,
+            //'notification' => $notification,
             'data' => $message
         );
 		//echo json_encode($fields);
+        return $this->sendPushNotification($fields);
+    }
+	
+	public function sendNotification($to, $message) {
+		$notification = array(
+	        'title' =>$message['data']['title'],
+	        'body' => $message['data']['message'],
+	        'icon' =>'afc_border', 
+	        'sound' => 'notification'
+	    );
+        $fields = array(
+            'to' => $to,
+            'notification' => $message
+        );
         return $this->sendPushNotification($fields);
     }
 

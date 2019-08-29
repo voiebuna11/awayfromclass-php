@@ -1,9 +1,12 @@
 <?php
 require_once("../dbconn.php");
 require_once("../includes/user_functions.php");
+require_once("../includes/notification_functions.php");
 
  if (isset($_FILES["uploaded_file"]["name"]) && isset($_GET['user_name'])) {
  	$user_name = $_GET['user_name'];
+	$user_id = getUserId($db, $user_name);
+	 
 	$file_name = $_FILES["uploaded_file"]["name"];
 	$tmp_name = $_FILES['uploaded_file']['tmp_name'];
 	$error = $_FILES['uploaded_file']['error'];
@@ -23,7 +26,13 @@ require_once("../includes/user_functions.php");
 		
 	    $location = $user_name.'/';
 		if  (move_uploaded_file($tmp_name, $location.$file_name)){
-			addUserFile($db, $user_name, $file_name, $ext);
+			addUserFile($db, $user_id, $file_name, $ext);
+			
+			//get id of created course
+			$file_id = $db->lastInsertId();
+			
+			//save event
+			createEvent($db, $user_id, $file_id, 'file', 'user_file', 'added');
 		    die("success: file_uploaded");
 		}
 	} else {
