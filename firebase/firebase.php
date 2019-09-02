@@ -5,35 +5,18 @@
  * @link URL Tutorial link
  */
 class Firebase {
-
-    public function sendMessage($to, $message) {
-    	//echo json_encode($message);
-    	//get info with from $message
-    	$notification = array(
-	        'title' =>$message['data']['title'],
-	        'body' => $message['data']['message'],
-	        'icon' =>'afc_border', 
-	        'sound' => 'notification'
-	    );
-        $fields = array(
-            'to' => $to,
-            //'notification' => $notification,
-            'data' => $message
-        );
-		//echo json_encode($fields);
-        return $this->sendPushNotification($fields);
-    }
-	
 	public function sendNotification($to, $message) {
 		$notification = array(
 	        'title' =>$message['data']['title'],
 	        'body' => $message['data']['message'],
-	        'icon' =>'afc_border', 
-	        'sound' => 'notification'
+	        'icon' =>'afc_border',
+            'image' => $message['data']['image'],
 	    );
         $fields = array(
             'to' => $to,
-            'notification' => $message
+            'notification' => $notification,
+            'priority' => 'high',
+            'data' => $message
         );
         return $this->sendPushNotification($fields);
     }

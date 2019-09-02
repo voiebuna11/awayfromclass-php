@@ -1,4 +1,31 @@
 <?php
+function getUserData($db, $all_optional, $c_field, $c_value, ...$table_params){
+	
+	// $db => database connection
+	// $all_optional => 1 - select all the fields from the table
+	//				!=> 1 - select the fields from $table_params
+	// $c_field => conditional field
+	// $c_value => conditional value
+	// $params => string parameters for pdo (...?,?,?)
+	// $fields => string list with required fields
+	if($all_optional == 1){
+		echo 'all_params';
+	} else {
+		$params = '('; $fields = '(';
+		foreach ($table_params as $i => $field) {
+			$params .= '?';
+			$fields .= $field;
+			if($i < sizeof($table_params)-1){
+				// add comma when for all fields but last
+				$params .= ', '; $fields .= ', ';
+			}
+		}
+		$params .= ')'; $fields .= ')';
+		
+		
+	}
+	echo $fields.' '.$params;
+}
 function getUserId($db, $user_name){
 	$sqlui=$db->prepare("SELECT user_id FROM us_users WHERE user_name=?");
     $sqlui->execute(array($user_name));
@@ -16,6 +43,12 @@ function getUserFullName($db, $user_id){
     $sqlun->execute(array($user_id));
 	$row = $sqlun->fetch(PDO::FETCH_ASSOC);
     return $row['user_last_name'].' '.$row['user_first_name'];
+}
+function getUserPic($db, $user_id){
+	$sqlun=$db->prepare("SELECT user_profile_pic FROM us_users WHERE user_id=?");
+    $sqlun->execute(array($user_id));
+	$row = $sqlun->fetch(PDO::FETCH_ASSOC);
+    return $row['user_profile_pic'];
 }
 function checkUserDisp($db, $user_name, $email){
 	$c=0;

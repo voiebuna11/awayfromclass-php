@@ -5,6 +5,8 @@ ini_set('display_errors', 'On');
 
 require_once '../firebase/firebase.php';
 require_once '../firebase/push.php';
+require_once '../includes/user_functions.php';
+require_once '../dbconn.php';
 
 if(isset($_POST['mess_fcm_id']) && isset($_POST['mess_to_id']) && isset($_POST['mess_from_id']) && isset($_POST['mess_from_name']) && isset($_POST['mess_text'])){
 	$firebase = new Firebase();
@@ -39,11 +41,10 @@ if(isset($_POST['mess_fcm_id']) && isset($_POST['mess_to_id']) && isset($_POST['
 	$push->setExtra($extra);
 	$push->setFrom($fromId);
 	$push->setDate($timestamp);
-	$push->setImage('');
-	//$push->setImage('http://api.androidhive.info/images/minion.jpg');
+	$push->setImage("http://{$_SERVER['HTTP_HOST']}/afc/assets/profile_pics/".getUserPic($db, $fromId));
 	
 	$json = $push->getPush();
-	$response = $firebase->sendMessage($regId, $json);
+	$response = $firebase->sendNotification($regId, $json);
 	
 	//data sent -> echo json_encode($json);
 	//data received -> echo json_encode($response);

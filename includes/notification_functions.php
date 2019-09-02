@@ -44,11 +44,10 @@ function createNotification($db, $from_id, $to_id, $title, $message, $push_type,
 	$push->setExtra($extra);
 	$push->setFrom($from_id);
 	$push->setDate($date);
-	//$push->setImage('http://api.androidhive.info/images/minion.jpg');
-	$push->setImage('');
+	$push->setImage("http://{$_SERVER['HTTP_HOST']}/afc//assets/profile_pics/".getUserPic($db, $from_id));
 	
 	$json = $push->getPush();
 	// send notification to user
-	$response = $firebase->sendMessage($fcm_id, $json);
+	$response = $firebase->sendNotification($fcm_id, $json);
 }
 ?>

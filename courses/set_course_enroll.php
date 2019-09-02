@@ -27,18 +27,18 @@ if(isset($_POST['user_id']) && isset($_POST['course_id']) && isset($_POST['statu
 	
 	//update enroll status
 	$sqlrf=$db->prepare("UPDATE crs_enrollments SET enroll_status = ? WHERE enroll_user_id = ? AND enroll_course_id=?");
-	//$sqlrf->execute(array($status, $user_id, $course_id));
+	$sqlrf->execute(array($status, $user_id, $course_id));
 	
 	if($status == 1){
 		//save event
-		//createEvent($db, $author_id, $course_id, 'course', 'course_enrollment', 'accepted');
+		createEvent($db, $author_id, $course_id, 'course', 'course_enrollment', 'accepted');
 		
 		//send notification to user
 		createNotification($db, $author_id, $user_id, $title, $message_yes, 'individual', 'course_enrollment');
 		die("success: req_accepted");
 	} else {
 		//save event
-		//createEvent($db, $author_id, $course_id, 'course', 'course_enrollment', 'denied');
+		createEvent($db, $author_id, $course_id, 'course', 'course_enrollment', 'denied');
 		
 		//send notification to user
 		createNotification($db, $author_id, $user_id, $title, $message_no, 'individual', 'course_enrollment');
