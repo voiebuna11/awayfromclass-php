@@ -1,5 +1,5 @@
 <?php
-function getUserData($db, $all_optional, $c_field, $c_value, ...$table_params){
+function getUserData($db, $all_optional, $c_field, $c_value, $table_params){
 	
 	// $db => database connection
 	// $all_optional => 1 - select all the fields from the table
