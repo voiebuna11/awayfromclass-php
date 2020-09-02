@@ -1,6 +1,29 @@
 <?php
-function getUserData($db, $all_optional, $c_field, $c_value, $table_params){
+function getUser($db, $user_id){
+	$stmtgu=$db->prepare("SELECT * FROM us_users WHERE user_id=?");
+	$stmtgu->execute(array($user_id));
+	while($row=$stmtgu->fetch()){
+		$row = array(
+		    	"target_user_id" => $row['user_id'],
+		 		"target_user_type" => $row['user_type'],
+		 		"target_user_user" => $row['user_name'],
+		 		"target_user_email" => $row['user_email'],
+		 		"target_user_lname" => $row['user_last_name'],
+		 		"target_user_fname" => $row['user_first_name'],
+		 		"target_user_phone" => $row['user_phone_number'],
+		 		"target_user_city" => $row['user_city'],
+		 		"target_user_year" => $row['user_year'],
+		 		"target_user_spec" => $row['user_specialization'],
+		 		"target_user_pic" => $row['user_profile_pic'],
+		 		"target_user_chat_id" => $row['user_chat_id']
+			);
+		return $row;
+	}
 	
+}
+/*
+function getUserData($db, $all_optional, $c_field, $c_value, ...$table_params){
+	//
 	// $db => database connection
 	// $all_optional => 1 - select all the fields from the table
 	//				!=> 1 - select the fields from $table_params
@@ -8,6 +31,7 @@ function getUserData($db, $all_optional, $c_field, $c_value, $table_params){
 	// $c_value => conditional value
 	// $params => string parameters for pdo (...?,?,?)
 	// $fields => string list with required fields
+	// 
 	if($all_optional == 1){
 		echo 'all_params';
 	} else {
@@ -21,11 +45,9 @@ function getUserData($db, $all_optional, $c_field, $c_value, $table_params){
 			}
 		}
 		$params .= ')'; $fields .= ')';
-		
-		
 	}
 	echo $fields.' '.$params;
-}
+}*/
 function getUserId($db, $user_name){
 	$sqlui=$db->prepare("SELECT user_id FROM us_users WHERE user_name=?");
     $sqlui->execute(array($user_name));

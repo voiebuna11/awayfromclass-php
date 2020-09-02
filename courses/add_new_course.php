@@ -12,7 +12,6 @@ if(isset($_POST['course_name']) &&  isset($_POST['course_description']) && isset
 	if(checkCourseDisp($db, $user_id, $course_name)>0){
 		die("error: course_already");
 	} else {
-		
 		//generate folder name by abbreviation
 		$abbreviations = explode(" ", $course_name);
 		foreach ($abbreviations as $a) {
@@ -37,7 +36,7 @@ if(isset($_POST['course_name']) &&  isset($_POST['course_description']) && isset
 		$course_id = $db->lastInsertId();
 		
 		//save event
-		createEvent($db, $user_id, $course_id, 'course', 'course_managing', 'created');
+		createEvent($db, $user_id, $course_id, $course_id, 'course', 'course_managing', 'created');
 		
 		die("success: data_registered");
 	}

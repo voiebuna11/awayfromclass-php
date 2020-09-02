@@ -1,2 +1,0 @@
-# awayfromclass-php
-php - AFC

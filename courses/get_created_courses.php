@@ -4,7 +4,7 @@ require_once("../dbconn.php");
 if(isset($_POST['user_id'])){
 	$user_id = $_POST['user_id'];
 	$post_data = array();
-	$stmtcl=$db->prepare("SELECT course_id, course_name FROM crs_courses WHERE author_id = ? ORDER BY course_name ASC");
+	$stmtcl=$db->prepare("SELECT course_id, course_name, course_folder FROM crs_courses WHERE author_id = ? ORDER BY course_name ASC");
 	$stmtcl->execute(array($user_id));
 	
 	while($row=$stmtcl->fetch()){
@@ -12,7 +12,8 @@ if(isset($_POST['user_id'])){
 		    	"id" => $row['course_id'],
 		 		"name" => $row['course_name'],
 		 		"enrollment" => NULL,
-		 		"author_id" => $user_id
+		 		"author_id" => $user_id,
+		 		"folder" => $row['course_folder']
 			);
 			array_push($post_data, $row);
 	}

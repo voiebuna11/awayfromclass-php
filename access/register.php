@@ -1,6 +1,7 @@
 <?php
 require_once("../dbconn.php");
 require_once("../includes/user_functions.php");
+require_once("../includes/notification_functions.php");
 
 if(isset($_POST['user_name']) && isset($_POST['user_password']) && isset($_POST['user_email']) && isset($_POST['user_fname']) && isset($_POST['user_lname'])
 	 && isset($_POST['user_city']) && isset($_POST['user_phone']) && isset($_POST['user_year']) && isset($_POST['user_spec']) && isset($_POST['user_type'])){
@@ -24,7 +25,16 @@ if(isset($_POST['user_name']) && isset($_POST['user_password']) && isset($_POST[
 								`user_last_name`, `user_phone_number`, `user_city`, `user_profile_pic`, `user_type`, `user_year`, `user_specialization`)
 								VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     		$sqlru->execute(array($username, $email, $password, $first_name, $last_name, $phone, $city, $pic, $type, $year, $spec));
-			mkdir("../users/".$username);
+			
+			//create user folder on server
+			if (!file_exists("../users/".$username)) {
+				mkdir("../users/".$username);
+			}
+			//get id of user created
+			$user_id = $db->lastInsertId();
+	
+			//save event
+			createEvent($db, $user_id, $user_id, 0,  'user', 'account_managing', 'created');
 			
 			die("success: data_registered");
 		}  else {

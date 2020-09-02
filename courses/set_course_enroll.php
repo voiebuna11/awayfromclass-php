@@ -31,14 +31,14 @@ if(isset($_POST['user_id']) && isset($_POST['course_id']) && isset($_POST['statu
 	
 	if($status == 1){
 		//save event
-		createEvent($db, $author_id, $course_id, 'course', 'course_enrollment', 'accepted');
+		createEvent($db, $author_id, $user_id, $course_id, 'user', 'course_enrollment', 'accepted');
 		
 		//send notification to user
 		createNotification($db, $author_id, $user_id, $title, $message_yes, 'individual', 'course_enrollment');
 		die("success: req_accepted");
 	} else {
 		//save event
-		createEvent($db, $author_id, $course_id, 'course', 'course_enrollment', 'denied');
+		createEvent($db, $author_id, $user_id, $course_id, 'user', 'course_enrollment', 'rejected');
 		
 		//send notification to user
 		createNotification($db, $author_id, $user_id, $title, $message_no, 'individual', 'course_enrollment');

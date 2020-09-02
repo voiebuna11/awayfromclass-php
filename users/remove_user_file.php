@@ -13,11 +13,11 @@ require_once("../includes/notification_functions.php");
 		//remove file from server
 		if(unlink($location.$file_name)){
 			//remove record from db
-			$sqldd=$db->prepare("DELETE FROM us_files WHERE us_file_name=?");
-			$sqldd->execute(array($file_name));
+			$sqldd=$db->prepare("DELETE FROM us_files WHERE us_file_name=? AND us_author_id=?");
+			$sqldd->execute(array($file_name, $user_id));
 			
 			//save event
-			createEvent($db, $user_id, $file_name, 'file', 'user_file', 'removed');
+			createEvent($db, $user_id, $file_name, $file_name, 'file', 'user_file', 'removed');
 			die("success: file_removed");
 		}
 	} else {

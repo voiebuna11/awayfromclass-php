@@ -41,7 +41,7 @@ if(isset($_POST['search']) && $_POST['search'] != '' && isset($_POST['user_id'])
 	
 	
 	//get details
-	$sqlsc=$db->prepare("SELECT crs_courses.course_id, crs_courses.author_id, crs_courses.course_name, 
+	$sqlsc=$db->prepare("SELECT crs_courses.course_id, crs_courses.author_id, crs_courses.course_name, crs_courses.course_folder, 
 						 crs_enrollments.enroll_status, us_users.user_first_name, us_users.user_last_name
 						 FROM crs_courses
 						 LEFT JOIN us_users ON crs_courses.author_id = us_users.user_id
@@ -55,7 +55,8 @@ if(isset($_POST['search']) && $_POST['search'] != '' && isset($_POST['user_id'])
 		 		"name" => $row['course_name'],
 		 		"enrollment" => $row['enroll_status'],
 		 		"author" => $row['user_last_name'].' '.$row['user_first_name'],
-		 		"author_id" => $row['author_id']
+		 		"author_id" => $row['author_id'],
+		 		"folder" => $row['course_folder']
 			);
 			array_push($post_data, $row);
 	}

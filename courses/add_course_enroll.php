@@ -23,7 +23,7 @@ if(isset($_POST['course_id']) && isset($_POST['user_id'])){
 	$sqlec->execute(array($course_id, $user_id));
 	
 	//save event
-	createEvent($db, $user_id, $course_id, 'course', 'course_enrollment', 'pending');
+	createEvent($db, $user_id, $user_id, $course_id, 'user', 'course_enrollment', 'pending');
 	
 	//send notification to author of course
 	createNotification($db, $user_id, $author_id, $title, $message, 'individual', 'course_enrollment');

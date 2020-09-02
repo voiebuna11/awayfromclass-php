@@ -7,12 +7,12 @@ include('../firebase/firebase.php');
 include('../firebase/push.php');
 
 // EVENTS
-function createEvent($db, $author_id, $target_id, $target_type, $type, $action){
+function createEvent($db, $author_id, $target_id, $context_id, $target_type, $context, $action){
 	$date = time();
 	
-	$sqlrce=$db->prepare("INSERT INTO `us_events` (`event_id`, `event_author_id`, `event_target_id`, `event_target_type`, `event_type`, `event_action`, `event_date`)
-						VALUES (NULL, ?, ?, ?, ?, ?, ?)");
-	$sqlrce->execute(array($author_id, $target_id, $target_type, $type, $action, $date));
+	$sqlrce=$db->prepare("INSERT INTO `us_events` (`event_id`, `event_author_id`, `event_target_id`, `event_context_id`, `event_target_type`, `event_context`, `event_action`, `event_date`)
+						VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)");
+	$sqlrce->execute(array($author_id, $target_id, $context_id, $target_type, $context, $action, $date));
 }
 
 // FCM
